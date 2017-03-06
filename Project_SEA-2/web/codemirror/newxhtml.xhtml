@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <title>TODO supply a title</title>
+        <meta name="viewport" content="width=device-width"/>
+    </head>
+    <body>
+        <title>CodeMirror</title>
+        <meta charset="utf-8"/>
+
+        <link rel="stylesheet" href="lib/codemirror.css"/>
+        <link rel="stylesheet" href="doc/docs.css"/>
+        <script src="lib/codemirror.js"></script>
+        <script src="mode/xml/xml.js"></script>
+        <script src="mode/javascript/javascript.js"></script>
+        <script src="mode/css/css.js"></script>
+        <script src="mode/htmlmixed/htmlmixed.js"></script>
+        <script src="addon/edit/matchbrackets.js"></script>
+
+        <script src="doc/activebookmark.js"></script>
+
+        <style>
+            .CodeMirror { height: auto; border: 1px solid #ddd; }
+            .CodeMirror-scroll { max-height: 200px; }
+            .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+        </style>
+
+
+
+        <article>
+
+
+
+            <section id="demo">
+                <h2>This is CodeMirror</h2>
+                <form style="position: relative; margin-top: .5em;"><textarea id="demotext"  cols="70"  rows="15">
+<!-- Create a simple CodeMirror instance -->
+<link rel="stylesheet" href="lib/codemirror.css"/>
+<script src="lib/codemirror.js"></script>
+<script>
+                            var editor = CodeMirror.fromTextArea(myTextarea, {
+                                mode: "text/html"
+                            });
+                        </script></textarea>
+                </form>
+                <script>
+                    var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
+                        lineNumbers: true,
+                        mode: "text/html",
+                        matchBrackets: true
+                    });
+                </script>
+
+            </section>
+
+
+
+        </article>
+    </body>
+</html>

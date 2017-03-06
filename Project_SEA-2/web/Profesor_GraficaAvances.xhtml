@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="/template/common/commonLayout_2_1.xhtml">
+            <ui:define name="content"> 
+
+                <p:layout fullPage="false"> 
+                    <p:layoutUnit position="center">
+                        <h:form>
+
+                            <br></br>                                            
+                            <H1>  Intentos empleados en cada ejercicio </H1>
+                            <br></br>  
+
+
+                            <p:lineChart xaxisLabel="Ejercicio"
+                                         yaxisLabel="Intentos"
+                                         value="#{avanceProfesorMB.linearModelIntentos}"
+                                         legendPosition="nw" 
+                                         animate="true"
+                                         style="height:400px;width: 1000px;"/>
+
+
+                            <br></br>                                            
+                            <H1> Minutos empleados en cada ejercicio </H1>
+                            <br></br>  
+
+
+
+                            <p:lineChart xaxisLabel="Ejercicio"
+                                         yaxisLabel="Intentos"
+                                         value="#{avanceProfesorMB.linearModelTiempo}"
+                                         legendPosition="nw" 
+                                         animate="true"
+                                         style="height:400px;width: 1000px;"/>
+
+                            <br></br>                                            
+                            <H1> Dias empleados en cada ejercicio </H1>
+                            <br></br>  
+                            <p:lineChart xaxisLabel="Ejercicio"
+                                         yaxisLabel="Intentos"
+                                         value="#{avanceProfesorMB.linearModelDias}"
+                                         legendPosition="nw" 
+                                         animate="true"
+                                         style="height:400px;width: 1000px;"/>
+
+
+
+                        </h:form>
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

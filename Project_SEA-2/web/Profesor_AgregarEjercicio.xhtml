@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <body>
+        <ui:composition template="/template/common/commonLayout_3.xhtml">
+            <ui:define name="content"> 
+
+                <p:layout fullPage="false"> 
+                    <p:layoutUnit position="center">
+
+                        <h:form id="form">
+
+
+                            <p:growl id="mensajes" 
+                                     showDetail="true" 
+                                     life="2000" />
+                            <p:panel id="panel"  
+                                     style="margin-bottom:10px; border: 0px">
+
+                                <H1> Ejercicio Nuevo </H1>                                
+
+                                <style> 
+                                    header, footer { width: 100%; height: 100px;  font-size: 2em; text-align: center; clear: both; } 
+                                    section { position: relative; } 
+                                    #izquierda { position: relative; width: 50%; top: 0; left: 0;  float: left; height: 100px; } 
+                                    #derecha { position: relative; width: 50%; top: 0; right: 0;  float: right; height: 100px; } 
+                                    .esqinfder { position: absolute; bottom: 5px; right: 5px;  } 
+                                    #codigFuentOutput{width: 50%; height: 100px;}
+
+
+                                </style>
+
+
+                                <div id="izquierda"> 
+                                    <p:panelGrid id="panel12" 
+                                                 columns="1"   
+                                                 style= " border: 0%" > 
+
+                                        <p:inputTextarea id="nombreProblema"  
+                                                         value="#{buildExerciseProMB.nombreSubMB}" 
+                                                         required="true"  
+                                                         label="CAMPO VACIO" 
+                                                         cols="70"  
+                                                         rows="2" >
+                                            <p:watermark for="nombreProblema" 
+                                                         value="Nombre del Ejercicio" />
+                                            <p:ajax event="keyup"></p:ajax>
+                                        </p:inputTextarea> 
+                                        <p:message for="nombreProblema" />
+                                        <p:inputTextarea id="descProblema"  
+                                                         value="#{buildExerciseProMB.descripcionSubMB}" 
+                                                         cols="70"  
+                                                         rows="5" 
+                                                         required="true" 
+                                                         label="CAMPO VACIO">
+                                            <p:watermark for="descProblema" 
+                                                         value="Descripción del problema" />
+                                            <p:ajax event="keyup"></p:ajax>
+                                        </p:inputTextarea>                                  
+                                        <p:message for="descProblema" />
+                                        <p:inputTextarea  id="pista"  
+                                                          value="#{buildExerciseProMB.sugerenciaSubMB}" 
+                                                          cols="70"  
+                                                          rows="5" 
+                                                          required="true" 
+                                                          label="CAMPO VACIO">
+                                            <p:watermark for="pista" 
+                                                         value="Pista/Sugerencia" />
+                                            <p:ajax event="keyup"></p:ajax>
+                                        </p:inputTextarea>
+                                        <p:message for="pista" />
+                                    </p:panelGrid>
+                                    <p:panelGrid id="panel123" 
+                                                 columns="3"   
+                                                 style= " border: 0%" > 
+                                        <p:outputLabel  value="Minutos :"/>
+                                        <p:inputMask id="tiempoMaximo" 
+                                                     mask="99" 
+                                                     value="#{buildExerciseProMB.tiempoTotalMB}"  
+                                                     required="true" 
+                                                     label="CAMPO VACIO" 
+                                                     style=" font-size: xx-large; width: 40%;">
+                                            <p:watermark for="tiempoMaximo" 
+                                                         value="01" />
+                                            <p:ajax event="keyup"></p:ajax>
+                                        </p:inputMask>
+                                        <p:message for="tiempoMaximo" />
+                                        <p:outputLabel  value="Intentos :"/>
+                                        <p:inputMask id="numeroMaximo" 
+                                                     mask="99" 
+                                                     value="#{buildExerciseProMB.intentosTotalMB}"  
+                                                     required="true" 
+                                                     label="CAMPO VACIO"   
+                                                     validatorMessage="tt4rgr" 
+                                                     style="width: 40%;" >
+                                            <p:watermark for="numeroMaximo" 
+                                                         value="00" />
+                                            <p:ajax event="keyup"></p:ajax>
+                                        </p:inputMask>
+                                        <p:message for="numeroMaximo" />
+                                        <p:outputLabel value="Return"/>
+                                        <p:selectOneMenu id="tipoDato2"  
+                                                         value="#{buildExerciseProMB.tipoMB}"   
+                                                         required="true">
+                                            <p:ajax listener="#{buildExerciseProMB.tipoCodigo()}" update="codeMirror" />
+                                            <f:selectItem itemLabel="Tipo de Dato"   />
+                                            <f:selectItem itemLabel="INT"   
+                                                          itemValue="1"  />                                        
+                                            <f:selectItem itemLabel="STRING" 
+                                                          itemValue="2" />
+                                            <f:selectItem itemLabel="FLOAT" 
+                                                          itemValue="3"  />
+                                            
+                                            
+                                        </p:selectOneMenu>
+                                    </p:panelGrid>
+
+                                    <p:panelGrid  id="areaCode" 
+                                                  columns="1"   
+                                                  style= "  width: 80%; border: 0%" > 
+                                        <h:outputText id="codigFuentOutput" 
+                                                      value="Codigo Fuente" />
+
+
+
+                                        <pe:codeMirror  id="codeMirror" 
+                                                        mode="javascript"     
+                                                        readOnly="true"
+                                                        theme="eclipse" 
+                                                        value="#{buildExerciseProMB.codigoFuenteSubMB}" 
+                                                        lineNumbers="true"  >
+
+                                        </pe:codeMirror><br></br>
+                                    </p:panelGrid>
+                                    <p:panelGrid columns="1"   
+                                                 style= " border: 0%" >
+                                        <p:commandButton value="Cargar Ejercicio"   
+                                                         id="cargarEjercicio"  
+                                                         actionListener="#{buildExerciseProMB.saveExercisePro()}" 
+                                                         update=":formTable:singleDT :form:panel12 :form:areaCode  :formTable:focus"
+                                                         process="@this"
+                                                         styleClass="ui-priority-primary"   >  
+
+                                        </p:commandButton>
+
+                                        <br></br>
+                                        <h:outputText value="Es necesario cargar al menos un caso de prueba"  />                                    
+
+                                    </p:panelGrid>
+                                </div>
+
+
+
+                            </p:panel>  
+                        </h:form> 
+
+                        <h:form id="formTable">
+                            <p:focus id="focus" />
+                            <div id="derecha">
+
+
+                                <p:dataTable id="singleDT" 
+                                             var="campo" 
+                                             value="#{buildExerciseProMB.listEjercicioPro}" 
+                                             selectionMode="single" 
+                                             selection="#{buildExerciseProMB.selectedCar2}" 
+                                             rowKey="#{campo.idEjercicioProfe}" 
+                                             style="width: 50%;" 
+                                             scrollable="true"
+                                             scrollHeight="150" >
+                                    <f:facet name="header"  >  
+                                        <p:commandButton   value="Editar" 
+                                                           actionListener="#{buildExerciseProMB.editarEjercicio(buildExerciseProMB.selectedCar2.idEjercicioProfe)}" 
+                                                           update=":form:nombreProblema :form:descProblema :form:pista 
+                                                           :form:panel123 :form:tiempoMaximo :form:numeroMaximo :form:tipoDato2 :form:codeMirror"
+                                                           icon="ui-icon-pencil"
+                                                           /> 
+
+                                        <p:commandButton   value="Eliminar" 
+                                                           actionListener="#{buildExerciseProMB.deleteEjercicio(buildExerciseProMB.selectedCar2.idEjercicioProfe)}" 
+                                                           update=":form:mensajes  :formTable"                                                           
+                                                           icon="ui-icon-trash"
+                                                           > 
+                                            <p:confirm header="Se eliminaran dotos los datos relacionados " 
+                                                       message=" Seguro que deseas eliminar?" 
+                                                       icon="ui-icon-alert" />
+                                        </p:commandButton>
+
+                                        <p:commandButton   value="Casos de Prueba"   
+                                                           actionListener="#{buildExerciseProMB.redirectToCasoPrueba(buildExerciseProMB.selectedCar2.idEjercicioProfe)}"
+                                                           icon="ui-icon-plusthick"
+                                                           /> 
+                                    </f:facet>
+                                    <p:column headerText="Nombre Ejercicio">
+                                        <h:outputText value="#{campo.nombre}" style=" width: max-content; height: max-content;"/>
+                                    </p:column>
+
+                                </p:dataTable>
+
+                                <p:confirmDialog global="true" >
+                                    <p:commandButton value="Sí" 
+                                                     type="button" 
+                                                     styleClass="ui-confirmdialog-yes" 
+                                                     icon="ui-icon-check" />
+                                    <p:commandButton value="No" 
+                                                     type="button" 
+                                                     styleClass="ui-confirmdialog-no" 
+                                                     icon="ui-icon-close" />
+                                </p:confirmDialog>
+
+                            </div>
+
+                        </h:form>
+
+                        <h:form id="imagen">
+                            <p:graphicImage  style=" position:  fixed;  bottom: 90px ; right:30px; " 
+                                             height="200" 
+                                             width="200"  
+                                             url="/resources/images/profesor.gif"></p:graphicImage>
+                        </h:form>
+
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

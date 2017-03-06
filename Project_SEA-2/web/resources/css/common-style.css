@@ -1,0 +1,97 @@
+#page{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+#header{
+    width: 100%;
+    height:100px;
+    border: 1px solid #000;
+    margin-bottom:16px;
+}
+
+#content{
+    width: 100%;
+    height:500px;
+    margin-right:16px;
+    margin-bottom:16px;
+    border: 1px solid #000;
+}
+#contentdiv1{
+    width: 5%;
+    height:500px;
+    background: yellow;
+    margin-right:16px;
+    margin-bottom:16px;
+    border: 2px solid #000;
+}
+#content #div2{
+    width: 100%;
+    height:500px;
+    margin-right:16px;
+    margin-bottom:16px;
+    border: 1px solid #000;
+}
+
+#footer{
+    width: 100%;
+    height:100px;
+    border: 1px solid #000;
+}
+
+body {
+    font-size: 95% !important;
+
+}
+
+.ui-widget,.ui-widget-header,.ui-widget-content,.ui-widget-header .ui-widget-header,.ui-widget-content .ui-widget-content,.ui-widget input,.ui-widget select,.ui-widget textarea,.ui-widget button
+{
+    font-size: 95% !important;
+}
+
+.ui-menubar,.ui-menu-child,.ui-menu {
+    font-size: 100% !important;
+}
+
+
+.ui-layout-north {
+    z-index:20 !important;
+    overflow:visible !important;;
+   
+}
+
+.ui-layout-north .ui-layout-unit-content {
+    overflow:visible !important;
+}
+
+.ui-layout-south {
+    z-index:20 !important;
+    overflow:visible !important;;
+}
+
+.ui-layout-south .ui-layout-unit-content {
+    overflow:visible !important;
+}
+
+
+
+
+#top {
+    background-image:url("toadgrad.png");
+    background-color: #E0ECFF;
+    padding:0;
+    margin:0 auto;
+    width: 100%;
+    height: 30px;
+
+}
+
+#bottom {
+    background-image:url("toadgrad.png");
+    background-color: #E0ECFF;
+    padding:0;
+    margin:0 auto;
+    width: 100%;
+    height: 30px;
+
+}

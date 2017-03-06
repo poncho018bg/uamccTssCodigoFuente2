@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body >
+
+        <ui:composition template="/template/common/commonLayout_1.xhtml">
+            <ui:define name="content" > 
+
+                <p:layout fullPage="false" > 
+                    <p:layoutUnit position="center" >
+                        <style> 
+                            #form { position: relative; text-align: center; width: 100%;  alignment-adjust: central; top: 0; left: 0;  float: top ; height: 100px; } 
+
+                        </style>
+
+                        <h:form id="form" >
+                            <p:growl id="mensajes" 
+                                     showDetail="true" 
+                                     life="2000" />
+
+                            <p:panel id="panel"  
+                                     style="margin-bottom:10px; ">
+                                <br></br>                                            
+                                <H1> Recuperar clave de acceso </H1>
+                                <br></br>  
+                                <center>
+                                    <p:panelGrid columns="2"  
+                                                 style=" width: 30%;" > 
+
+
+                                        <p:inputText id="correoElectronicoInputText"   
+                                                     value="#{recuperarCuentaMB.correo}" 
+                                                     required="true" 
+                                                     label="Ver campo Nombre:" 
+                                                     style="width: 90%;" >  
+                                            <p:watermark for="correoElectronicoInputText" 
+                                                         value="Correo Electronico" />
+                                            <f:validateRequired/>
+                                            <f:validateLength minimum="1" 
+                                                              maximum="90"/>
+                                        </p:inputText>
+                                        <p:graphicImage url="/resources/images/correo.gif" ></p:graphicImage>
+                                    </p:panelGrid>
+                                    <p:panelGrid columns="2" 
+                                                 style=" width: 30%" > 
+                                        <p:commandButton value="Cancelar"   
+                                                         id="cancelar" 
+
+                                                         actionListener="#{recuperarCuentaMB.redirectToIndex()}"
+                                                         icon="ui-icon-close" 
+                                                         /> 
+
+                                        <p:commandButton value="Buscar"   
+                                                         id="buscar"  
+                                                         actionListener="#{recuperarCuentaMB.existeRegistro()}" 
+                                                         update=":form:mensajes" 
+                                                         icon="ui-icon-search" 
+                                                         /> 
+
+
+                                    </p:panelGrid>
+                                </center>
+
+                            </p:panel>  
+                        </h:form>
+
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

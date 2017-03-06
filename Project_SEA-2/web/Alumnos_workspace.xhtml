@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+    <body>
+
+
+        <ui:composition template="/template/common/commonLayout_alumno_4.xhtml">
+            <ui:define name="content"> 
+                <p:layout fullPage="false"> 
+                    <p:layoutUnit position="center">
+
+                        <h:form id="form">
+
+                            <p:growl id="mensajeTiempo" 
+                                     showDetail="true" 
+                                     sticky="true"  
+                                     redisplay="true"/>
+                            <style>
+                                .descrp{
+                                    font-family: Garamond,verdana; font-weight: 900; font-size: 200pt;font-weight: bold;
+                                    background: #FFFFFF; border: #FFFFFF;
+
+                                }
+                                .suger{
+                                    font-family: Garamond,verdana; font-weight: 900; font-size: 18pt;font-weight: bold;
+                                    background: #FFFFFF; border: #FFFFFF;
+                                }
+
+
+                            </style>
+
+
+                            <div id="izquierda" >                                   
+                                <p:panelGrid columns="1" > 
+                                    <h:outputText value="Ejercicio: #{alumnoWorkSpaceMB.nombreMB_A}" 
+                                                  style=" font-size: 20px" />
+                                    <br></br> 
+                                    <h:inputTextarea   class="descrp" 
+                                                       value="#{alumnoWorkSpaceMB.descripcionMB_A}" 
+                                                       disabled="true" 
+                                                       cols="90"  
+                                                       rows="5"  />
+                                    <br></br>
+                                    <h:inputTextarea class="suger" 
+                                                     value="#{alumnoWorkSpaceMB.sugerenciaMB_A}" 
+                                                     disabled="true" 
+                                                     cols="90"  
+                                                     rows="5" />
+                                    <br></br>
+                                </p:panelGrid>
+                                <div>
+                                    <style>
+                                        .codeResult1{
+                                            font-family: Garamond,verdana; font-weight: 900; font-size: 18pt;font-weight: bold;
+                                            background: #FFFFFF; border: #FFFFFF;
+                                        }
+                                    </style>
+                                    <p:outputLabel value="Escribe tu código aquí :" style="font-style: inherit; color: red;"/>
+                                    <pe:codeMirror id="codeMirror21" 
+                                                   mode="javascript"    
+                                                   theme="eclipse" 
+                                                   value="#{alumnoWorkSpaceMB.codigoFuenteMB_A}" 
+                                                   lineNumbers="true" />
+                                    <p:outputLabel value="Salida del compilador :" style="position:  fixed; width: 40%;  top: 270px; right:200px; border: #00f; font-style: inherit; color: red;"/>
+
+                                    <p:inputTextarea id="codeResult"  
+                                                     class="codeResult1" 
+                                                     value="#{alumnoWorkSpaceMB.resultadoCompilador}"   
+                                                     disabled="true"  onfocus="codeResult"
+                                                     cols="250"  
+                                                     rows="12" 
+                                                     autoResize="false" 
+                                                     style="position:  fixed; width: 40%;  top: 300px; right:200px; border: #00f "  />
+                                </div>
+
+
+                                <p:panelGrid columns="2" > 
+                                    <p:commandButton value="Regresar"   
+                                                     id="ajaxRegresar"  
+                                                     actionListener="#{alumnoWorkSpaceMB.redirectToBackExceAlumno()}"
+
+                                                     >                               
+                                    </p:commandButton>
+                                    <p:commandButton value="Calificar"   
+                                                     id="ajaxCalificar"    process="@this codeMirror21" 
+                                                     actionListener="#{alumnoWorkSpaceMB.ejercicioAlumnoValidarSave()}"
+                                                     update="tabtiempos intentosAlum tabla11  codeResult tabla11 ajaxCalificar intentosAlum "    
+                                                     disabled="#{alumnoWorkSpaceMB.disableBTNcalificar}"                                       
+                                                     >                               
+                                    </p:commandButton>
+                                </p:panelGrid>     
+ 
+                            </div>
+
+
+                            <div id="derecha"  
+                                 style=" position:  fixed; width: 40%;  top: 100px; right:30px; ">
+
+
+                                <center>
+                                    <p:panelGrid columns="3">
+                                        
+                               
+                                        <p:panelGrid  id="tabtiempos" 
+                                                      columns="3">
+                                            <h:inputHidden/>
+                                            <h:outputLabel value="Profesor" 
+                                                           style=" font-family: Garamond,verdana;  font-size: 09pt;font-weight: bold; "/>
+                                            <h:outputLabel value="Alumno" 
+                                                           style=" font-family: Garamond,verdana;  font-size: 09pt;font-weight: bold; "/>
+                                            <h:outputLabel value="Intentos" 
+                                                           style=" font-family: Garamond,verdana; ; font-size: 09pt;font-weight: bold; "/>
+                                            <h:outputLabel value=" #{alumnoWorkSpaceMB.intentosTotalMB_A} " 
+                                                           style=" font-family: Garamond,verdana;  font-size: 12pt;font-weight: bold; "/>
+                                            <h:outputLabel id="intentosAlum" 
+                                                           value="#{alumnoWorkSpaceMB.intentosTotal_TAMB}" 
+                                                           style=" font-family: Garamond,verdana;  font-size: 12pt;font-weight: bold; "/>
+                                            <h:outputLabel value="Tiempo" 
+                                                           style=" font-family: Garamond,verdana;  font-size: 09pt;font-weight: bold; "/>
+                                            <h:outputLabel value=" #{alumnoWorkSpaceMB.tiempoTotalMB_A} :00 " 
+                                                           style=" font-family: Garamond,verdana;  font-size: 12pt;font-weight: bold; "/>                                            
+                                            <p:outputLabel id="cronometro_div">
+                                                <strong class="Fonte_13_Logado"></strong> <span id="cronometro" class="Fonte_13_Logado" style="font-family: Garamond,verdana; font-weight: 900; font-size: 10pt;font-weight: bold;
+                                    background: #FBDE2D; border: #0080FF;"></span>
+                                            </p:outputLabel>
+                                           
+                                            <p:poll id="polld1" 
+                                                    interval="60" 
+                                                    listener="#{alumnoWorkSpaceMB.increment}" 
+                                                    update=" mensajeTiempo  ajaxCalificar polld1"  
+                                                    stop="#{alumnoWorkSpaceMB.disableBTNcalificar}"  
+                                                    autoStart="true" />
+                                            <p:poll id="polld2" 
+                                                    interval="10" 
+                                                    listener="#{alumnoWorkSpaceMB.incrementSegundos()}" 
+                                                    update=" mensajeTiempo  ajaxCalificar"  
+                                                    stop="#{alumnoWorkSpaceMB.disableBTNcalificar}" 
+                                                    autoStart="true" />
+                                            
+                                            
+                                                     <script language="javascript">
+                                                                        var minProfesor="#{alumnoWorkSpaceMB.tiempoTotalMB_A}"
+                                                                        var minAlumno="#{alumnoWorkSpaceMB.number}"
+                                                                        var minutos = minProfesor-minAlumno
+                                                                                var seconds = 00
+                                                                                var campo = document.getElementById("cronometro");
+                                                                                var campo_div = document.getElementById("cronometro_div");
+                                                                                function startCountdown()
+                                                                                {
+                                                                                if (seconds &lt;= 0){
+                                                                                seconds = 60;
+                                                                                        minutos -= 1;
+                                                                                }
+                                                                                if (minutos &lt;= -1){
+                                                                                seconds = 0;
+                                                                                        seconds += 1;
+                                                                                        campo.innerHTML = "";
+                                                                                        campo_div.innerHTML = "Tiempo Finalizado!" ;
+                                                                                } else{
+                                                                                seconds -= 1
+                                                                                        if (seconds &lt; 10) {
+                                                                                seconds = "0" + seconds;
+                                                                                }
+                                                                                campo.innerHTML = " " + minutos + " : " + seconds;
+                                                                                        setTimeout("startCountdown()", 1000);
+                                                                                }
+                                                                                }
+                                                                        startCountdown();
+                                        </script>
+
+                                        </p:panelGrid>
+
+                                        <p:panelGrid columns="1" >
+
+                                            <p:dataTable  id="tabla11" 
+                                                          value="#{alumnoWorkSpaceMB.listPruebasAlumnosSalida}" 
+                                                          var="usuarioCaso"  
+                                                          emptyMessage="¡Estatus del ejercicio!" 
+                                                          style="  width: 100%;">
+                                                
+                                                <p:column headerText="Salida" >                                                    
+                                                    <h:outputText value="#{usuarioCaso.resultado_table}" 
+                                                                  style=" font-size: 15px; color: #{usuarioCaso.colorResult}; font-weight: 900; "/>
+                                                </p:column>
+                                                <p:column  headerText="Estado" >                                                   
+                                                    <h:outputText value="#{usuarioCaso.status_table}" 
+                                                                  style=" font-size: 15px; color: #{usuarioCaso.colorResult}; font-weight: 900; "/>
+                                                </p:column>                                               
+
+                                            </p:dataTable>
+                                        </p:panelGrid>
+
+                                    </p:panelGrid>
+                                </center>
+
+                            </div>
+
+                        </h:form>    
+
+                        <h:form id="imagen">
+                            <p:graphicImage  style=" position:  fixed;  bottom: 90px ; right:30px; " 
+                                             height="100" 
+                                             width="100"  
+                                             url="/resources/images/alumno.gif"></p:graphicImage>
+                        </h:form>
+
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

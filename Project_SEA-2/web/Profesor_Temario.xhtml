@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="/template/common/commonLayout_2.xhtml">
+            <ui:define name="content"> 
+
+                <p:layout fullPage="false"> 
+                    <p:layoutUnit position="center">
+                        <style> 
+                            header, footer { width: 100%; height: 100px;  font-size: 2em; text-align: center; clear: both; } 
+                            section { position: relative; } 
+                            #izquierda { position: relative; width: 50%; top: 0; left: 0;  float: left; height: 100px; } 
+                            #derecha { position: relative; width: 50%; top: 0; right: 0;  float: right; height: 100px; } 
+                            .esqinfder { position: absolute; bottom: 5px; right: 5px;  } 
+
+                        </style>
+
+                        <div id="izquierda">
+                            <h:form id="form">
+
+                                <p:panel id="panel"  
+                                         style="margin-bottom:10px;">
+                                    <br></br>                                            
+                                    <H1> Administrar temario </H1>
+                                    <br></br> 
+                                    <p:inputText id="nombreClaseInputText"   
+                                                 value="#{temarioProMB.nombreTemaMB2}" 
+                                                 required="true" 
+                                                 label="Ver campo Nombre:"  
+                                                 style="width: 20%;">  
+                                        <p:watermark for="nombreClaseInputText" 
+                                                     value="Nombre del tema" />
+                                        <f:validateRequired/>
+                                        <f:validateLength minimum="1" 
+                                                          maximum="90"/>
+                                    </p:inputText>
+                                    <p:message for="nombreClaseInputText" />
+                                    <br></br> 
+                                    <p:commandButton value="Agregar"   
+                                                     id="agregarClase"  
+                                                     action="#{temarioProMB.saveTemaPro()}" 
+                                                     update=":form2:tabla :form:panel " 
+                                                     process="@this nombreClaseInputText"
+                                                     icon="ui-icon-check"  
+                                                     styleClass="ui-priority-primary"
+                                                     > 
+                                        <p:resetInput target=":form:panel" />
+                                    </p:commandButton>
+                                    <br></br> 
+                                </p:panel>  
+                            </h:form>
+
+                            <h:form id="form2">
+                                <p:growl id="mensajes2" 
+                                         showDetail="true" 
+                                         life="2000" />
+                                <p:panel id="panel2"  
+                                         style="margin-bottom:10px;" >
+                                    <p:commandButton value="Regresar"   
+                                                     id="regresar"  
+                                                     actionListener="#{temarioProMB.redirectBackToClass()}" 
+                                                     icon="ui-icon-circle-arrow-w" 
+                                                     styleClass="ui-priority-primary"
+                                                     >
+
+                                    </p:commandButton> 
+
+                                    <br></br>                                            
+                                    <H1> Temario </H1>
+                                    <br></br>  
+
+                                    
+                                        <p:tree id="tabla"  
+                                            value="#{temarioProMB.root}" 
+                                            var="node"    
+                                            dynamic="true"  
+                                            style="    font-weight:  900 "   
+                                            selectionMode="single" 
+                                            selection="#{temarioProMB.singleSelectedTreeNode}"  >
+                                        <p:treeNode id="tabla2"  
+                                                    expandedIcon="ui-icon-document"    
+                                                    collapsedIcon="ui-icon-document"      >
+                                            <h:outputText value="#{node}"   />  
+                                        </p:treeNode>
+
+
+                                        <p:ajax event="select" 
+                                                listener="#{temarioProMB.onNodeSelect}"  
+                                                update=":flot_1:flotante1"  
+                                                oncomplete="PF('widgetDlgAgregar').show();" />
+                                        <p:ajax event="unselect" 
+                                                listener="#{temarioProMB.onNodeUnSelect}"/>
+                                        <p:ajax event="expand"   
+                                                listener="#{temarioProMB.onNodeExpand}" />
+                                        <p:ajax event="collapse" 
+                                                listener="#{temarioProMB.onNodeCollapse}"/>
+
+                                    </p:tree>
+                                        
+                    
+                                    
+
+
+
+                                </p:panel>  
+                            </h:form>
+                        </div>
+                        <div id="derecha">
+
+
+                        </div>
+                        <h:form id="flot_1">
+
+                            <p:dialog id="flotante1" 
+                                      header="Agregar Tema"       
+                                      widgetVar="widgetDlgAgregar"  
+                                      showEffect="explode" 
+                                      hideEffect="bounce"  
+                                      width="350" 
+                                      height="150"  >
+                                <center>
+                                    <br></br><br></br>
+                                    <h:outputLabel style=" font-size:  x-large" 
+                                                   value="#{temarioProMB.nombreMB}"/> 
+                                    <br></br><br></br><br></br>
+
+                                    <p:commandButton oncomplete="PF('widgetDlgAgregar2').show();" 
+                                                     update=":flot_2:flotante2"  
+                                                     value="Agregar Subtema"   
+                                                     rendered="#{!temarioProMB.btnEnable}"  
+                                                     icon="ui-icon-circle-plus">
+
+                                    </p:commandButton>                                     
+                                    <p:commandButton value="Ejercicios" 
+                                                     oncomplete="PF('widgetDlgAgregar').hide();" 
+                                                     actionListener="#{temarioProMB.redirectToListEjercicios()}"                                                      
+                                                     rendered="#{!temarioProMB.btnEliminar}" 
+                                                     icon="ui-icon-gear" /> 
+                                    
+                                    <p:commandButton value="Editar"
+                                                     oncomplete="PF('widgetDlgAgregar2').show();"
+                                                     update=":flot_2:nombreSubTema"
+                                                     actionListener="#{temarioProMB.subTemaVerEditar()}"                                                      
+                                                     rendered="#{!temarioProMB.btnEliminar}"
+                                                     icon="ui-icon-gear" />
+                                    
+                                    <p:commandButton value="Editar"
+                                                     oncomplete="PF('widgetDlgAgregar').hide();"
+                                                     actionListener="#{temarioProMB.temaVerEditar()}"                                                      
+                                                     update=":form:nombreClaseInputText"
+                                                     rendered="#{temarioProMB.btnEliminar}"
+                                                     icon="ui-icon-gear" />
+                                    
+                                    <p:commandButton value="Eliminar"
+                                                     oncomplete="PF('widgetDlgAgregar').hide();"  
+                                                     actionListener="#{temarioProMB.passParamEliminar()}" 
+                                                     update=":form2:tabla  :form2:mensajes2"                                                       
+                                                     icon="ui-icon-circle-minus" >
+                                        <p:confirm header="Se eliminaran dotos los datos relacionados " message=" Seguro que deseas eliminar?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+
+                                    <p:confirmDialog global="true" >
+                                        <p:commandButton value="Sí" 
+                                                         type="button" 
+                                                         styleClass="ui-confirmdialog-yes" 
+                                                         icon="ui-icon-check" />
+                                        <p:commandButton value="No" 
+                                                         type="button" 
+                                                         styleClass="ui-confirmdialog-no" 
+                                                         icon="ui-icon-close" />
+                                    </p:confirmDialog>
+
+                                </center>
+                            </p:dialog>
+
+                        </h:form>
+                        <h:form id="flot_2">
+
+                            <p:dialog id="flotante2" 
+                                      header="Agregar Subtema"    
+                                      widgetVar="widgetDlgAgregar2"  
+                                      showEffect="explode" 
+                                      hideEffect="bounce" 
+                                      width="250" 
+                                      height="150" 
+                                      closable="true" >
+                                <center>
+                                    <br></br><br></br>
+                                    <h:panelGrid id="gridAdd2" 
+                                                 columns="1"  >                                        
+                                        <p:inputText id="nombreSubTema"  
+                                                     value="#{temarioProMB.nombreSubMB}"   
+                                                     required="true" 
+                                                     style="width: 90%;" >  
+                                            <p:watermark for="nombreSubTema" 
+                                                         value="Nombre del Subtema" />
+                                            <f:validateRequired/>
+                                            <f:validateLength minimum="1" 
+                                                              maximum="90"/>
+                                        </p:inputText>
+                                    </h:panelGrid>
+                                    <br></br><br></br>
+                                    <p:commandButton oncomplete="PF('widgetDlgAgregar2').hide();  PF('widgetDlgAgregar').hide();" 
+                                                     actionListener="#{temarioProMB.saveSubTemaPro()}" 
+                                                     update=":form2:tabla"  
+                                                     value="Guardar"  
+                                                     icon="ui-icon-disk"/>  
+
+                                </center>
+                            </p:dialog>
+
+                        </h:form>
+
+                        <h:form id="flot_22">
+
+                            <p:dialog id="flotanteEditar" 
+                                      header="Editar Temario"    
+                                      widgetVar="widgetDlgAgregar3"  
+                                      showEffect="explode" 
+                                      hideEffect="bounce" 
+                                      width="350" 
+                                      height="150" 
+                                      closable="true" >
+                                <center>
+                                    <br></br><br></br>
+                                    <h:panelGrid id="gridAdd2" 
+                                                 columns="1"  >                                        
+                                        <p:inputText id="editarNombre"  
+                                                     value="#{temarioProMB.nombreTemaMB2}"   
+                                                     required="true" 
+                                                     style="width: 90%;" >  
+
+                                            <f:validateRequired/>
+                                            <f:validateLength minimum="1" 
+                                                              maximum="90"/>
+                                        </p:inputText>
+                                    </h:panelGrid>
+                                    <br></br><br></br>
+
+                                    <p:commandButton oncomplete="PF('widgetDlgAgregar2').hide();  PF('widgetDlgAgregar').hide();"  
+                                                     actionListener="#{temarioProMB.actualizarTema()}" 
+                                                     update=":form2:tabla"  
+                                                     rendered="#{temarioProMB.actualizandoTemario}" 
+                                                     value="Actualizar Tema" />  
+                                    <p:commandButton oncomplete="PF('widgetDlgAgregar2').hide();  PF('widgetDlgAgregar').hide();"  
+                                                     actionListener="#{temarioProMB.actualizarSubTema()}" 
+                                                     update=":form2:tabla" 
+                                                     rendered="#{temarioProMB.actualizandosubTemas}" 
+                                                     value="Actualizar Subtema" />
+                                </center>
+                            </p:dialog>
+
+                        </h:form>
+                        <h:form id="imagen">
+                            <p:graphicImage  style=" position:  fixed;  bottom: 90px ; right:30px; " 
+                                             height="200" 
+                                             width="200"  
+                                             url="/resources/images/profesor.gif"/>
+                        </h:form>
+
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

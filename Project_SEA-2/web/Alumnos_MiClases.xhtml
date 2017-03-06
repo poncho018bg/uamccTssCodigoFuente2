@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+
+    </h:head>
+
+    <body>
+        <ui:composition template="/template/common/commonLayout.xhtml">
+            <ui:define name="content"> 
+                <p:layout fullPage="false"> 
+                    <p:layoutUnit position="center">
+                        <style> 
+                            #form2 { position: relative; text-align: center; width: 50%;  alignment-adjust: central; top: 0; left: 0;  float: top ; height: 100px; } 
+                            #imagen { position: relative; text-align: center; width: 05%;  alignment-adjust: central; bottom: auto; right:0;   float: bottom ; height: 100px; } 
+
+                        </style>
+                        <h:form id="form">
+                             <p:growl id="mensajes" 
+                                      showDetail="true" 
+                                      life="2000" />
+
+
+                            <p:panel id="panel"  
+                                     style="margin-bottom:10px;">
+                                <br></br>                                            
+                                <H1> Clases </H1>
+                                <br></br>  
+
+                                <p:panelGrid columns="3">                                     
+                                    <p:selectOneMenu  id="selectProfesor" 
+                                                      value="#{alumnoClassMB.opcionActual_Prof2}" >
+                                        <f:selectItem itemLabel="--Selecciona Un Profesor--" 
+                                                      itemValue="01" />
+                                        <f:selectItems value="#{alumnoClassMB.opcsProf}"  /> 
+                                        <p:ajax event="change" 
+                                                update="selectClase"  />
+                                    </p:selectOneMenu> 
+
+                                    <p:selectOneMenu  id="selectClase" 
+                                                      value="#{alumnoClassMB.opcionActual_Clase2}" >
+                                        <f:selectItem itemLabel="--Selecciona Una Clase--" 
+                                                      itemValue="01" />
+                                        <f:selectItems value="#{alumnoClassMB.opcsClase}" />
+                                    </p:selectOneMenu> 
+
+                                    <p:commandButton value="Registrar"   
+                                                     id="ajax"  
+                                                     actionListener="#{alumnoClassMB.saveClaseAlumno()}" 
+                                                     update=":form2:singleDT :form:mensajes" 
+                                                     icon="ui-icon-check" 
+                                                     styleClass="ui-priority-primary"/> 
+
+
+                                </p:panelGrid>
+
+                            </p:panel>  
+
+                        </h:form>
+
+                        <h:form id="form2">
+                            <p:panel id="panel2"   
+                                     style="margin-bottom:10px;" >
+                                <br></br>                                            
+                                <H1> Mis Clases </H1>
+                                <br></br>  
+
+
+
+                                <p:dataTable id="singleDT" 
+                                             var="salida" 
+                                             value="#{alumnoClassMB.listClaseAlumno}" 
+                                             selectionMode="single" 
+                                             selection="#{alumnoClassMB.selectedCar2}" 
+                                             rowKey="#{salida.idClaseAlumnoTAB}" 
+                                             style="width: 70%;" 
+                                             scrollable="true"
+                                             scrollHeight="150" >
+                                    <f:facet name="header"  >  
+
+
+                                        <p:commandButton   value="Eliminar" 
+                                                           action="#{alumnoClassMB.passParamEliminar(alumnoClassMB.selectedCar2.idClaseAlumnoTAB)}" 
+                                                           update=":form2:singleDT :form:mensajes"                    
+                                                           icon="ui-icon-trash"
+                                                           > 
+                                            <p:confirm header="Se eliminaran dotos los datos relacionados " 
+                                                       message=" Seguro que deseas eliminar?" 
+                                                       icon="ui-icon-alert" />
+                                        </p:commandButton>
+
+                                        <p:commandButton   value="Ver Clase"   
+                                                           action="#{alumnoClassMB.claseAlumnoUp(alumnoClassMB.selectedCar2.idClaseAlumnoTAB)}"
+                                                           icon="ui-icon-newwin"
+                                                           /> 
+                                    </f:facet>
+                                    <p:column headerText="Nombre">
+                                        <h:outputText value="#{salida.nombreClassTAB}" 
+                                                      style=" width: max-content; height: max-content;"/>
+                                    </p:column>
+
+                                </p:dataTable>
+
+                            </p:panel> 
+                            <p:confirmDialog global="true" >
+                                <p:commandButton value="Sí" 
+                                                 type="button" 
+                                                 styleClass="ui-confirmdialog-yes" 
+                                                 icon="ui-icon-check" />
+                                <p:commandButton value="No" 
+                                                 type="button" 
+                                                 styleClass="ui-confirmdialog-no" 
+                                                 icon="ui-icon-close" />
+                            </p:confirmDialog>
+
+                        </h:form>
+                        <h:form id="imagen">
+                            <p:graphicImage  style=" position:  fixed;  bottom: 90px ; right:30px; " 
+                                             height="150" 
+                                             width="150"  
+                                             url="/resources/images/alumno.gif"></p:graphicImage>
+                        </h:form>
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

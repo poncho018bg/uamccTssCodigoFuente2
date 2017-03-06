@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="/template/common/commonLayout_2_1.xhtml">
+            <ui:define name="content"> 
+
+                <p:layout fullPage="false"> 
+                    <p:layoutUnit position="center">
+
+                        <style> 
+                            header, footer { width: 100%; height: 100px;  font-size: 2em; text-align: center; clear: both; } 
+                            section { position: relative; } 
+                            #izquierda { position: relative; width: 60%; top: 0; left: 0;  float: left; height: 100px; } 
+                            #derecha { position: relative; width: 40%; top: 0; right: 0;  float: right; height: 100px; } 
+                            .esqinfder { position: absolute; bottom: 5px; right: 5px;  } 
+
+                        </style>
+
+
+                        <div id="izquierda">
+                            <h:form>
+
+                                <br></br>
+                                <h:panelGrid columns="2" 
+                                             cellpadding="5">
+                                    <p:commandButton value="Reporte General" 
+                                                     type="button" 
+                                                     onclick="PF('dlg1').show();" 
+                                                     icon="ui-icon-clipboard" />
+
+                                </h:panelGrid>
+                                <p:dialog header="Ver Por categorias" 
+                                          widgetVar="dlg1" 
+                                          showEffect="explode" 
+                                          hideEffect="bounce" 
+                                          height="50">
+                                    <br></br>
+                                    <h:commandButton id="idclase" 
+                                                     value="Clase" 
+                                                     actionListener="#{profesorReporteMB.verPDF()}"   />
+                                    <h:commandButton  id="idtema" 
+                                                      value="Tema" 
+                                                      type="button" 
+                                                      onclick="PF('temapdf').show();"   />
+                                    <h:commandButton id="idsubtema" 
+                                                     value="Subtema" 
+                                                     type="button" 
+                                                     onclick="PF('subtemapdf').show();"   />
+                                    <h:commandButton id="idejercicio" 
+                                                     value="Ejercicio" 
+                                                     type="button" 
+                                                     onclick="PF('ejerciciopdf').show();"  />
+                                    <h:commandButton id="idalumno" 
+                                                     value="Alumno" 
+                                                     type="button" 
+                                                     onclick="PF('alumnopdf').show();" />
+                                </p:dialog>
+                            </h:form>
+                            <h:form>
+                                <p:dialog header="Clases" 
+                                          widgetVar="claseVer" 
+                                          showEffect="explode" 
+                                          hideEffect="bounce" 
+                                          height="100"  
+                                          width="500" >
+                                    <p:dataTable  id="tabla" 
+                                                  value="#{classProMB.listClasePro}" 
+                                                  var="clase" 
+                                                  emptyMessage="¡Intente otros valores para su busqueda!">
+
+                                        <p:column id="inscritosClaseHeader" >
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre de la Clase" />
+                                            </f:facet>
+                                            <h:outputText value="#{clase.nombreClass}"  
+                                                          style=" font-size: 15px;"/>
+                                        </p:column>
+                                        <p:column id="verpdf" >                                        
+                                            <h:commandButton   value="Ver"  
+                                                               actionListener="#{profesorReporteMB.verPDF()}"  >  
+                                                <f:param name="idClase"  
+                                                         value="#{clase.idClaseProfesor}"/> 
+
+                                            </h:commandButton>
+                                        </p:column>
+
+                                    </p:dataTable> 
+                                </p:dialog>
+
+                            </h:form>
+                            <h:form>
+
+                                <p:dialog header="Tema" 
+                                          widgetVar="temapdf" 
+                                          showEffect="explode" 
+                                          hideEffect="bounce" 
+                                          height="100"  
+                                          width="500">
+                                    <p:dataTable  id="tablaTema" 
+                                                  value="#{profesorReporteMB.listTema}" 
+                                                  var="tema" 
+                                                  emptyMessage="¡Intente otros valores para su busqueda!">
+
+                                        <p:column id="inscritosClaseHeader" >
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre" />
+                                            </f:facet>
+                                            <h:outputText value="#{tema.nombreTema}"  
+                                                          style=" font-size: 15px;"/>
+                                        </p:column>
+                                        <p:column id="verpdfTema" >                                        
+                                            <h:commandButton   value="Ver"  
+                                                               actionListener="#{profesorReporteMB.verTemaPDF()}"  >
+                                                <f:param name="idTema" 
+                                                         value="#{tema.idTema}"  /> 
+                                            </h:commandButton>
+                                        </p:column>
+
+                                    </p:dataTable> 
+                                </p:dialog>
+
+                            </h:form>
+                            <h:form id="formtema">
+
+                            </h:form>
+                            <h:form id="formsubtema">
+                                <p:dialog header="Subtema" 
+                                          widgetVar="subtemapdf" 
+                                          showEffect="explode" 
+                                          hideEffect="bounce" 
+                                          height="100"  
+                                          width="500">
+
+                                    <p:dataTable  id="tablasubTema" 
+                                                  value="#{profesorReporteMB.listSubtema}" 
+                                                  var="subtema" 
+                                                  emptyMessage="¡Intente otros valores para su busqueda!">
+
+                                        <p:column id="inscritosClaseHeader" >
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre" />
+                                            </f:facet>
+                                            <h:outputText value="#{subtema.nombreSubtemas}"  
+                                                          style=" font-size: 15px;"/>
+                                        </p:column>
+                                        <p:column id="verpdfTema" >                                        
+                                            <h:commandButton   value="Ver"  
+                                                               actionListener="#{profesorReporteMB.verSubtemaPDF()}" >
+                                                <f:param name="idSubtema" 
+                                                         value="#{subtema.idSubtema}"  /> 
+                                            </h:commandButton>
+                                        </p:column>
+
+                                    </p:dataTable> 
+
+                                </p:dialog>
+                            </h:form>
+
+                            <h:form id="formejercicio">
+                                <p:dialog header="Ejercicio" 
+                                          widgetVar="ejerciciopdf" 
+                                          showEffect="explode" 
+                                          hideEffect="bounce" 
+                                          height="100" 
+                                          width="500">
+
+                                    <p:dataTable  id="tablaEjercicio" 
+                                                  value="#{profesorReporteMB.listEjercicio}" 
+                                                  var="ejercicio" 
+                                                  emptyMessage="¡Intente otros valores para su busqueda!">
+
+                                        <p:column  >
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre" />
+                                            </f:facet>
+                                            <h:outputText value="#{ejercicio.ejercicioNom}"  
+                                                          style=" font-size: 15px;"/>
+                                        </p:column>
+                                        <p:column  >                                        
+                                            <h:commandButton   value="Ver"  
+                                                               actionListener="#{profesorReporteMB.verEjercicioPDF()}" >
+                                                <f:param name="idEjercicio" 
+                                                         value="#{ejercicio.idEjercicio}"  /> 
+                                            </h:commandButton>
+                                        </p:column>
+
+                                    </p:dataTable> 
+
+                                </p:dialog>
+                            </h:form>
+                            <h:form id="formalumno">
+                                <p:dialog header="Alumno" 
+                                          widgetVar="alumnopdf" 
+                                          showEffect="explode" 
+                                          hideEffect="bounce" 
+                                          height="100" 
+                                          width="500">
+
+                                    <p:dataTable  id="tablaAlumno" 
+                                                  value="#{profesorReporteMB.listAlumnos}" 
+                                                  var="alumnos" 
+                                                  emptyMessage="¡Intente otros valores para su busqueda!">
+
+                                        <p:column  >
+                                            <f:facet name="header">
+                                                <h:outputText value="Nombre" />
+                                            </f:facet>
+                                            <h:outputText value="#{alumnos.nomAlumno}   #{alumnos.apellidoPaterno}   #{alumnos.apellidoMaterno} "  
+                                                          style=" font-size: 15px;"/>
+                                        </p:column>
+                                        <p:column  >                                        
+                                            <h:commandButton   value="Ver"  
+                                                               actionListener="#{profesorReporteMB.verAlumnosPDF()}" >
+                                                <f:param name="idUsuario" 
+                                                         value="#{alumnos.idAlumno}"  /> 
+                                            </h:commandButton>
+                                        </p:column>
+
+                                    </p:dataTable> 
+                                </p:dialog>
+                            </h:form>
+                            <br></br>                                            
+                            <H1> Mis Alumnos </H1>
+                            <br></br>  
+
+                            <h:form id="form2">
+                                <p:panel id="panel2"  
+                                         style="margin-bottom:10px;" >
+
+
+                                    <p:dataTable  id="tabla"  
+                                                  style="width: 100%;" 
+                                                  value="#{graficaProfesorMB.listInscritosGraficas}" 
+                                                  var="usuario" 
+                                                  emptyMessage="¡Intente otros valores para su busqueda!">
+
+                                        <p:column id="nombreHeader">
+                                            <f:facet name="header">
+                                                <h:outputText value="Alumno"  />
+                                            </f:facet>
+                                            <h:outputText value="#{usuario.nombres_ca} #{usuario.paterno_ca} #{usuario.materno_ca}" />
+                                        </p:column>
+
+                                        <p:column id="opc1Header">
+                                            <f:facet name="header">
+                                            </f:facet>
+                                            <p:commandButton   value="Graficas" 
+                                                               actionListener="#{graficaProfesorMB.redirectToMisAvances()}"    
+                                                               icon="ui-icon-image">
+                                                <f:param name="idClaseAlumno" 
+                                                         value="#{usuario.claseProfesor_idClaseProfesor_ca} #{usuario.usuarios_idusuarios_ca}"  /> 
+                                            </p:commandButton>
+                                        </p:column>
+
+                                        <p:column id="opc1Header12">
+                                            <f:facet name="header">
+                                            </f:facet>
+                                            <p:commandButton   value="Reporte individual"  
+                                                               onclick="PF('opc1').show();"   
+                                                               actionListener="#{profesorReporteMB.subirSesion()}" 
+                                                               icon="ui-icon-clipboard">
+                                                <f:param name="idClaseAlumno" 
+                                                         value="#{usuario.claseProfesor_idClaseProfesor_ca} #{usuario.usuarios_idusuarios_ca}"  /> 
+                                            </p:commandButton>
+                                        </p:column>                                    
+
+
+                                    </p:dataTable>   
+
+
+
+                                    <p:dialog header="Ver Por Categorias" 
+                                              widgetVar="opc1" 
+                                              showEffect="explode" 
+                                              hideEffect="bounce" 
+                                              height="50">
+                                        <br></br>
+                                        <h:commandButton id="idclase1" 
+                                                         value="Clase"  
+                                                         action="#{profesorReporteMB.verClasePDF()}" />
+                                        <h:commandButton  id="idtema1" 
+                                                          value="Tema" 
+                                                          type="button" 
+                                                          onclick="PF('temaAlumnopdf').show();"    />
+                                        <h:commandButton id="idsubtema1" 
+                                                         value="Subtema" 
+                                                         type="button" 
+                                                         onclick="PF('subtemaAlumnopdf').show();"  />
+
+                                    </p:dialog>
+
+                                </p:panel>  
+                            </h:form>
+
+                        </div>
+                        <h:form>
+
+                            <p:dialog header="Tema" 
+                                      widgetVar="temaAlumnopdf" 
+                                      showEffect="explode" 
+                                      hideEffect="bounce" 
+                                      height="100"  
+                                      width="500">
+                                <p:dataTable  id="tablaTema" 
+                                              value="#{profesorReporteMB.listTema}" 
+                                              var="tema" 
+                                              emptyMessage="¡Intente otros valores para su busqueda!">
+
+                                    <p:column id="inscritosClaseHeader" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre" />
+                                        </f:facet>
+                                        <h:outputText value="#{tema.nombreTema}"  
+                                                      style=" font-size: 15px;"/>
+                                    </p:column>
+                                    <p:column id="verpdfTema" >                                        
+                                        <h:commandButton   value="Ver"  
+                                                           actionListener="#{profesorReporteMB.verTemaAlumnoPDF()}"  >
+                                            <f:param name="idTema" 
+                                                     value="#{tema.idTema}"  /> 
+                                        </h:commandButton>
+                                    </p:column>
+
+                                </p:dataTable> 
+                            </p:dialog>
+
+                        </h:form>
+
+                        <h:form id="formsubtema1">
+                            <p:dialog header="Subtema" 
+                                      widgetVar="subtemaAlumnopdf" 
+                                      showEffect="explode" 
+                                      hideEffect="bounce" 
+                                      height="100"  
+                                      width="500">
+
+                                <p:dataTable  id="tablasubTema" 
+                                              value="#{profesorReporteMB.listSubtema}" 
+                                              var="subtema" 
+                                              emptyMessage="¡Intente otros valores para su busqueda!">
+
+                                    <p:column id="inscritosClaseHeader" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre" />
+                                        </f:facet>
+                                        <h:outputText value="#{subtema.nombreSubtemas}"  
+                                                      style=" font-size: 15px;"/>
+                                    </p:column>
+                                    <p:column id="verpdfTema" >                                        
+                                        <h:commandButton   value="Ver"  
+                                                           actionListener="#{profesorReporteMB.verSubtemaAlumnoPDF()}" >
+                                            <f:param name="idSubtema" 
+                                                     value="#{subtema.idSubtema}"  /> 
+                                        </h:commandButton>
+                                    </p:column>
+
+                                </p:dataTable> 
+
+                            </p:dialog>
+                        </h:form>
+                        <div id="derecha">
+
+                            <br></br>
+                            <p:growl id="growl" 
+                                     showDetail="true" />
+                            <h:panelGrid columns="2" 
+                                         columnClasses="left,right" 
+                                         style="width:100%">
+                                <p:chart type="pie" 
+                                         model="#{graficaProfesorMB.pieModel1}" 
+                                         style="width:400px;height:300px">
+                                    <p:ajax event="itemSelect" 
+                                            listener="#{graficaProfesorMB.itemSelect}" 
+                                            update="growl" />
+                                </p:chart>
+                            </h:panelGrid>
+                        </div>
+
+
+
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

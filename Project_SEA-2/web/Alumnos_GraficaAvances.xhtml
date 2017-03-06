@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+        <ui:composition template="/template/common/commonLayout_2_1.xhtml">
+            <ui:define name="content"> 
+
+                <p:layout fullPage="false"> 
+                    <p:layoutUnit position="center">
+
+                        <h:form>
+                            <br></br>
+                            <h:panelGrid columns="2" 
+                                         cellpadding="5">
+                                <p:commandButton value="Ver Reporte" 
+                                                 type="button" 
+                                                 onclick="PF('dlg1').show();" 
+                                                 icon="ui-icon-document" />
+                            </h:panelGrid>
+                            <p:dialog header="Ver Por categorias" 
+                                      widgetVar="dlg1" 
+                                      showEffect="explode" 
+                                      hideEffect="bounce" 
+                                      height="160">                               
+                                <p:panelGrid columns="1"  >
+                                    <h:commandButton id="idclase" 
+                                                     value="Clase" 
+                                                     action="#{alumnoGraficaAvancesMB.verClasePDF()}"
+                                                     immediate="true"/>
+                                    <h:commandButton  id="idtema" 
+                                                      value="Tema" 
+                                                      type="button" 
+                                                      onclick="PF('temapdf').show();"   />
+                                    <h:commandButton id="idsubtema" 
+                                                     value="Subtema" 
+                                                     type="button" 
+                                                     onclick="PF('subtemapdf').show();"  />
+
+                                </p:panelGrid>
+                            </p:dialog>
+                        </h:form>
+                        <h:form>
+
+                            <p:dialog header="Tema" 
+                                      widgetVar="temapdf" 
+                                      showEffect="explode" 
+                                      hideEffect="bounce" 
+                                      height="100"  
+                                      width="500">
+                                <p:dataTable  id="tablaTema" 
+                                              value="#{alumnoGraficaAvancesMB.listTemasAlumno}" 
+                                              var="tema" 
+                                              emptyMessage="¡Intente otros valores para su busqueda!">
+
+                                    <p:column id="inscritosClaseHeader" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre" />
+                                        </f:facet>
+                                        <h:outputText value="#{tema.nombreTema}"  
+                                                      style=" font-size: 15px;"/>
+                                    </p:column>
+                                    <p:column id="verpdfTema" >                                        
+                                        <h:commandButton   value="Ver"  
+                                                           actionListener="#{alumnoGraficaAvancesMB.verTemaPDF()}"  >
+                                            <f:param name="idTema" 
+                                                     value="#{tema.idTema}"  /> 
+                                        </h:commandButton>
+                                    </p:column>
+
+                                </p:dataTable> 
+                            </p:dialog>
+
+                        </h:form>
+
+                        <h:form id="formsubtema">
+                            <p:dialog header="Subtema" 
+                                      widgetVar="subtemapdf" 
+                                      showEffect="explode" 
+                                      hideEffect="bounce" 
+                                      height="100"  
+                                      width="500">
+
+                                <p:dataTable  id="tablasubTema" 
+                                              value="#{alumnoGraficaAvancesMB.listSubTemasAlumno}" 
+                                              var="subtema" 
+                                              emptyMessage="¡Intente otros valores para su busqueda!">
+
+                                    <p:column id="inscritosClaseHeader" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre" />
+                                        </f:facet>
+                                        <h:outputText value="#{subtema.nombreSubtemas}"  
+                                                      style=" font-size: 15px;"/>
+                                    </p:column>
+                                    <p:column id="verpdfTema" >                                        
+                                        <h:commandButton   value="Ver"   
+                                                           actionListener="#{alumnoGraficaAvancesMB.verSubtemaPDF()}" >
+                                            <f:param name="idSubtema" 
+                                                     value="#{subtema.idSubtema}"  /> 
+                                        </h:commandButton>
+                                    </p:column>
+
+                                </p:dataTable> 
+
+                            </p:dialog>
+                        </h:form>
+
+                        <h:form>
+
+                            <br></br>                                            
+                            <H1>  Intentos empleados en cada ejercicio </H1>
+                            <br></br>  
+
+                            <p:lineChart 
+                                xaxisLabel="Ejercicio"
+                                yaxisLabel="Intentos"
+                                value="#{alumnoGraficaAvancesMB.linearModelIntentos}"
+                                legendPosition="nw" 
+                                animate="true"
+                                style="height:400px;width: 1000px;"/>
+
+                            <br></br>                                            
+                            <H1> Minutos empleado en cada ejercicio </H1>
+                            <br></br>  
+                            <p:lineChart 
+                                xaxisLabel="Ejercico"
+                                yaxisLabel="Minutos"
+                                value="#{alumnoGraficaAvancesMB.linearModelTiempo}"
+                                legendPosition="nw" 
+                                animate="true"
+                                style="height:400px;width: 1000px;"/>
+
+
+
+                            <br></br>                                            
+                            <H1> Dias empleados en cada ejercicio </H1>
+                            <br></br>  
+                            <p:lineChart 
+                                xaxisLabel="Ejercicio"
+                                yaxisLabel="Dias"
+                                value="#{alumnoGraficaAvancesMB.linearModel}"
+                                legendPosition="nw" 
+                                animate="true"
+                                style="height:400px;width: 1000px;"/>
+                        </h:form>
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

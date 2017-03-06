@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="/template/common/commonLayout_alumno_2.xhtml">
+            <ui:define name="content"> 
+
+                <p:layout fullPage="false"> 
+                    <p:layoutUnit position="center">
+                        <style>                             
+                            #imagen { position: relative; text-align: center; width: 05%;  alignment-adjust: central; bottom: auto; right:0;   float: bottom ; height: 100px; } 
+                        </style>
+
+                        <h:form id="form">
+                            <p:panel id="panel"  
+                                     style="margin-bottom:10px;">
+                                <br></br>                                            
+                                <H1> Ejercicios </H1>
+                                <br></br>                                    
+                                <p:tree style=" font-size: xx-large"  
+                                        id="tabla" 
+                                        value="#{alumnoEjercicioMB.root}" 
+                                        var="node" 
+                                        dynamic="true"   
+                                        selectionMode="single" 
+                                        selection="#{alumnoTemarioMB.singleSelectedTreeNode}"  >
+                                    <p:treeNode expandedIcon="ui-icon-document"  
+                                                collapsedIcon="ui-icon-document"   >
+                                        <h:outputText value="#{node}"  />  
+                                    </p:treeNode>
+
+                                    <p:ajax event="select" 
+                                            listener="#{alumnoEjercicioMB.onNodeSelect}" 
+                                            update=""  ></p:ajax>
+                                    <p:ajax event="unselect" 
+                                            listener="#{alumnoEjercicioMB.onNodeUnSelect}"></p:ajax>
+                                    <p:ajax event="expand" 
+                                            listener="#{alumnoEjercicioMB.onNodeExpand}"></p:ajax>
+                                    <p:ajax event="collapse" 
+                                            listener="#{alumnoEjercicioMB.onNodeCollapse}"></p:ajax>
+
+                                </p:tree>
+
+
+                            </p:panel>  
+                        </h:form>                      
+                        <h:form id="imagen">
+                            <p:graphicImage  style=" position:  fixed;  bottom: 90px ; right:30px; " 
+                                             height="150" 
+                                             width="150"  
+                                             url="/resources/images/alumno.gif"></p:graphicImage>
+                        </h:form>
+
+
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>
+

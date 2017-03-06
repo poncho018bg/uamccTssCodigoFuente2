@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>    
+
+
+        <h:form >  
+            <div style="  background-color: #C41313;"   align="left">
+                <br></br><br></br><br></br>
+                <form>
+                    <p:menubar style=" background: #C41313;border: #C41313; ">   
+                        <f:facet name="options" >
+                            <p:commandButton     style=" color: #C41313;  border-color: #C41313; "   value="Ejercicios" actionListener="#{menuAlumno.redirectMisEjerciciosAlumno()}"  icon="ui-icon-extlink" />
+                            <p:commandButton     style=" color: #C41313;  border-color: #C41313; "   value="Temario"  actionListener="#{menuAlumno.redirectToMisTemasAlumno()}"  icon="ui-icon-extlink" />
+
+                            <p:commandButton     style=" color: #C41313;  border-color: #C41313; "   value="Mis Clases" actionListener="#{menuAlumno.redirectToMisClasesAlumno()}"    icon="ui-icon-extlink" />                            
+                            <p:commandButton     style=" color: #C41313;  border-color: #C41313; "   value="Logout"  actionListener="#{menuAlumno.cerrarSession()}"  icon="ui-icon-power" />
+
+                        </f:facet>
+                    </p:menubar>
+                    <p:graphicImage  style=" position: fixed; top:0; left: 0; " height="90" width="200"  url="/resources/images/logoFinal.gif"></p:graphicImage>
+
+                </form>
+            </div>
+        </h:form>
+
+
+    </body>
+</html>

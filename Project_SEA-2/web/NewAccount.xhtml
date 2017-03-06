@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="/template/common/commonLayout_1.xhtml">
+            <ui:define name="content"> 
+
+                <p:layout fullPage="false"> 
+                    <p:layoutUnit position="center" >
+                        <style> 
+                            #form { position: relative; text-align: center; width: 100%;  alignment-adjust: central; top: 0; left: 0;  float: top ; height: 100px; } 
+
+                        </style>
+
+                        <h:form id="form" >
+                            <p:growl id="mensajes"
+                                     showDetail="true" 
+                                     life="2000" />
+
+                            <p:panel id="panel"  
+                                     style="margin-bottom:10px; ">
+                                <br></br>                                            
+                                <H1> Crear  cuenta </H1>
+                                <br></br>  
+
+                                <p:inputText id="nombreInputText"   
+                                             value="#{indexMB.nombreUsuMB}" 
+                                             required="true" 
+                                             label="Ver campo Nombre:"  
+                                             style="width: 20%;">  
+                                    <p:watermark for="nombreInputText" 
+                                                 value="Nombres" />
+                                    <f:validateRequired/>
+                                    <f:validateLength minimum="1" 
+                                                      maximum="90"/>
+                                </p:inputText>
+                                <p:message for="nombreInputText" />
+                                <br></br> 
+
+                                <p:inputText id="apellidoPaInputText"   
+                                             value="#{indexMB.apellidoPaternoMB}" 
+                                             required="true" 
+                                             label="Ver campo Paterno:"  
+                                             style="width: 20%;">  
+                                    <p:watermark for="apellidoPaInputText" 
+                                                 value="Apellido Paterno" />
+                                    <f:validateRequired/>
+                                    <f:validateLength minimum="1" 
+                                                      maximum="90"/>
+                                </p:inputText>
+                                <p:message for="apellidoPaInputText" />
+                                <br></br> 
+
+                                <p:inputText id="apellidoMaInputText"   
+                                             value="#{indexMB.apellidoMaternoMB}" 
+                                             required="true" 
+                                             label="Ver campo Paterno:"  
+                                             style="width: 20%;">  
+                                    <p:watermark for="apellidoMaInputText" 
+                                                 value="Apellido Materno" />
+                                    <f:validateRequired/>
+                                    <f:validateLength minimum="1" 
+                                                      maximum="90"/>
+                                </p:inputText>
+                                <p:message for="apellidoMaInputText" />
+                                <br></br> 
+
+                                <p:inputText id="correoElectronicoInputText"   
+                                             value="#{indexMB.correoMB}" 
+                                             required="true" 
+                                             label="Ver campo Nombre:" 
+                                             style="width: 20%;" >  
+                                    <p:watermark for="correoElectronicoInputText" 
+                                                 value="Correo Electronico" />
+                                    <f:validateRequired/>
+                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
+                                    <f:validateLength minimum="1" 
+                                                      maximum="90"/>
+                                </p:inputText>
+                                <p:message for="correoElectronicoInputText" />
+                                <br></br> 
+
+                                <p:password id="contraseñaInputText"  
+                                            value="#{indexMB.passwordMB}" 
+                                            feedback="true"  
+                                            required="true" 
+                                            style="width: 20%;"   >
+                                    <p:watermark for="contraseñaInputText" 
+                                                 value="Contraseña" />
+                                    <f:validateRequired/>
+                                    <f:validateLength minimum="1" 
+                                                      maximum="90"/>                                    
+                                </p:password>
+                                <p:message for="contraseñaInputText" />
+                                <br></br> 
+
+                                <h:outputLabel for="id_especialidadSelectOneMenu" 
+                                               value="" />
+                                <p:selectOneMenu  id="id_especialidadSelectOneMenu" 
+                                                  value="#{indexMB.opcionActual_123}" 
+                                                  required="true">
+                                    <f:selectItem itemLabel="-- Seleccione  --" 
+                                                  itemValue="0" />
+                                    <f:selectItems value="#{indexMB.opcs1}"/> 
+                                </p:selectOneMenu>
+                                <p:message for="id_especialidadSelectOneMenu" />
+                                <br></br><br></br>
+
+                                <p:commandButton value="Registrar"   
+                                                 id="ajax"  
+                                                 actionListener="#{indexMB.saveRegistro()}" 
+                                                 update=":form:mensajes" icon="ui-icon-check" 
+                                                 styleClass="ui-priority-primary"/> 
+
+                            </p:panel>  
+                        </h:form>
+
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
+

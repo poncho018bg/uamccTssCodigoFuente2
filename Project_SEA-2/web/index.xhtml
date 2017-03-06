@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition  template="/template/common/commonLayout_1.xhtml">
+            <ui:define name="content"> 
+
+                <p:layout fullPage="false" > 
+
+                    <p:layoutUnit position="center">
+                        <style> 
+                            header, footer { width: 100%; height: 100px;  font-size: 2em; text-align: center; clear: both; } 
+                            section { position: relative; } 
+                            #izquierda { position: relative; width: 50%; top: 0; left: 0;  float: left; height: 100px; } 
+                            #derecha { position: relative; width: 50%; top: 0; right: 0;  float: right; height: 100px; } 
+                            .esqinfder { position: absolute; bottom: 5px; right: 5px;  } 
+
+                        </style>
+
+
+                        <div id="izquierda">
+                            <br></br><br></br><br></br><br></br><br></br><br></br> 
+
+
+                            <p:graphicImage url="/resources/images/logo-Final-122.gif" ></p:graphicImage>
+                        </div> 
+                        <div id="derecha">
+                            <br></br><br></br><br></br><br></br><br></br><br></br>                         
+
+
+                            <h:form id="form" >  
+                                <p:growl id="mensajes" 
+                                         showDetail="true" 
+                                         life="2000" />
+
+                                <p:inputText id="correoElectronicoInputText"  
+                                             style="width: 50%;"   
+                                             value="#{indexMB.correoMB}" >  
+                                    <p:watermark for="correoElectronicoInputText" 
+                                                 value="Correo Electronico" />
+                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                </p:inputText>
+                                <p:message for="correoElectronicoInputText" />
+                                <br/>
+
+                                <p:password id="pwd1" 
+                                            value="#{indexMB.passwordMB}" 
+                                            style="width: 50%;" 
+                                            match="pwd1" >
+                                    <p:watermark for="pwd1" 
+                                                 value="Contraseña" />
+
+                                </p:password>
+
+                                <br/>
+
+                                <p:commandLink id="ajaxLink" 
+                                               update="" 
+                                               actionListener="#{indexMB.redirectToRecuperarCuenta()}" 
+                                               style="margin-right:20px;">
+                                    <h:outputText value="¿Olvido su contraseña?"    
+                                                  style="width: 300px;"/>
+                                </p:commandLink>
+                                <p:message for="ajaxLink" />
+                                <br/>
+                                <p:commandButton value="Iniciar Sesión"                                                 
+                                                 id="ajax"  
+                                                 actionListener="#{indexMB.loginUsuario()}"                                                                                                
+                                                 update=":form:mensajes" 
+                                                 icon="ui-icon-check"
+
+                                                 styleClass="ui-priority-primary"/> 
+                                <br/><br/><br/>
+                            </h:form>
+                            <h:form>
+                                <h:outputLabel  value="¿No dispones de una  cuenta? " />                                        
+
+                                <br/><br/>
+                                <p:commandLink id="ajaxLinkNewRegistro" 
+                                               update=""  
+                                               actionListener="#{indexMB.redirectToNewAccount()}"  
+                                               style="margin-right:20px;">
+                                    <h:outputText value="Registrate Ahora" />
+                                </p:commandLink>
+
+                                <br/><br/>
+                            </h:form>
+                        </div>
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
